@@ -24,9 +24,12 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
+    console.log('Anthropic status:', response.status);
+    console.log('Anthropic response:', JSON.stringify(data));
     const reply = data.content?.[0]?.text || "Something went wrong — try again.";
     return res.status(200).json({ reply });
   } catch (error) {
+    console.log('Error:', error.message);
     return res.status(500).json({ reply: 'Failed to contact Anthropic API' });
   }
 }
