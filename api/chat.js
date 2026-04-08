@@ -24,8 +24,9 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
-    return res.status(200).json(data);
+    const reply = data.content?.[0]?.text || "Something went wrong — try again.";
+    return res.status(200).json({ reply });
   } catch (error) {
-    return res.status(500).json({ error: 'Failed to contact Anthropic API' });
+    return res.status(500).json({ reply: 'Failed to contact Anthropic API' });
   }
 }
