@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-3-5-sonnet-20241022',
+        model: 'claude-haiku-4-5-20251001',
         max_tokens: 1000,
         system: SYSTEM,
         messages,
@@ -24,12 +24,9 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
-    console.log('Anthropic status:', response.status);
-    console.log('Anthropic response:', JSON.stringify(data));
     const reply = data.content?.[0]?.text || "Something went wrong — try again.";
     return res.status(200).json({ reply });
   } catch (error) {
-    console.log('Error:', error.message);
     return res.status(500).json({ reply: 'Failed to contact Anthropic API' });
   }
 }
